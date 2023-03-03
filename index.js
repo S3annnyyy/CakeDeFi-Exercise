@@ -22,6 +22,7 @@ function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt) {
 
 rl.on('line', (line) => {
     line = line.split(" ");
+    // FOR STATIC DATA
     if (line.length === 3) {
         // store values in RATE Map
         for (let i=0; i<line.length; i++) {
