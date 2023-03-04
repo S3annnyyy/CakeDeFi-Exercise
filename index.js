@@ -10,7 +10,7 @@ let RATE = new Map();
 const CURRENCY = ["BTC", "ETH", "DOGE"];
 
 // Initialize token sale function
-function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt) {
+function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt, RATE) {
     BigNumber.set({ DECIMAL_PLACES: deci, ROUNDING_MODE: BigNumber.ROUND_DOWN });
 
     ethSR = BigNumber(ethSaleRate);
@@ -29,7 +29,7 @@ rl.on('line', (line) => {
             RATE.set(CURRENCY[i], line[i]);
         }
     } else if (line.length === 4) {
-        const output = getTokenSale(line[0], parseInt(line[1]), line[2], line[3]);
+        const output = getTokenSale(line[0], parseInt(line[1]), line[2], line[3], RATE);
         console.log(output);
     }
 });

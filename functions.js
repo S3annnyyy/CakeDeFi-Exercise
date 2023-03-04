@@ -1,7 +1,8 @@
 const axios = require('axios');
+const BigNumber = require('bignumber.js');
 require('dotenv').config()
 
-async function getPriceListing(cryptocurr) {
+async function getLivePrice(cryptocurr) {
   let RATE = new Map();
   try {
     for await (curr of cryptocurr) {
@@ -22,10 +23,15 @@ async function getPriceListing(cryptocurr) {
   }
 }
 
-// TEST
-// getPriceListing(["BTC", "ETH", "DOGE"]).then((RATE) => {
-//   console.log(RATE);
+function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt, RATE) {
+  BigNumber.set({ DECIMAL_PLACES: deci, ROUNDING_MODE: BigNumber.ROUND_DOWN });
 
-// });
+  ethSR = BigNumber(ethSaleRate);
+  cVR = RATE.get(purchCurr) / RATE.get("ETH");
+  tmp = BigNumber(purchAmt).multipliedBy(cVR);
+  final = tmp.multipliedBy(ethSR).decimalPlaces(deci).toFixed(deci);
+  return final;
+}
 
-module.exports = {getPriceListing};
+
+module.exports = {getLivePrice, getTokenSale};
