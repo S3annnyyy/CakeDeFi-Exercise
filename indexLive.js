@@ -1,17 +1,12 @@
-const pricing = require('./priceListing');
+const pricing = require('./priceFunction.js');
 const readline = require('readline');
 const BigNumber = require('bignumber.js');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-});
-
-// Initialize Map
-let RATE = new Map();
-const CURRENCY = ["BTC", "ETH", "DOGE"];
+// Initialize crytocurrency involed
+const CRYPTOCURRENCY = ["BTC", "ETH", "DOGE"];
 
 // Initialize token sale function
-function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt) {
+function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt, RATE) {
     BigNumber.set({ DECIMAL_PLACES: deci, ROUNDING_MODE: BigNumber.ROUND_DOWN });
 
     ethSR = BigNumber(ethSaleRate);
@@ -21,27 +16,16 @@ function getTokenSale(ethSaleRate, deci, purchCurr, purchAmt) {
     return final;
 }
 
-// Retrieve live cryptocurrency data
-async function f1() {
-    try {
-    for (let i=0; i<CURRENCY.length; i++) {
-        tmp = await pricing.getPriceListing(CURRENCY[i]);
-        RATE.set(CURRENCY[i], await tmp);
-    }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+pricing.getPriceListing(CRYPTOCURRENCY).then((RATE) => {
+    const rl = readline.createInterface({
+        input: process.stdin,
+    });
 
-async function execute() {
-    await f1();
     rl.on('line', (line) => {
         line = line.split(" ");
         if (line.length === 4) {
-        // const output = getTokenSale(line[0], parseInt(line[1]), line[2], line[3]);
-        // console.log(output);
+        const output = getTokenSale(line[0], parseInt(line[1]), line[2], line[3], RATE);
+        console.log(output);
         }
-        console.log("heli");
     });
-}
-execute();
+});
