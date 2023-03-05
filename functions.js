@@ -18,7 +18,7 @@ async function getLivePrice(cryptocurr) {
     }
     return RATE;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return null;
   }
 }
