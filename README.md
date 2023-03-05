@@ -7,9 +7,12 @@
 
 ### API used: [CoinMarketCap](https://coinmarketcap.com/api/)
 
-To get results run, `node indexLive.js < inputLive.txt` 
+To get results run on cmd, `node indexLive.js < inputLive.txt` 
 
-For unit testing run, `npm test`
+For unit testing run on cmd, `npm test`
+
+### Output
+![test](https://user-images.githubusercontent.com/67400060/222947391-729d1d4d-29c7-4da2-9846-e3774fe0e7a6.jpg)
 
 ### Bonus Question Answer: 
 #### SALE amount is rounded down to ensure accuracy and consistency in cryptocurrency transactions
